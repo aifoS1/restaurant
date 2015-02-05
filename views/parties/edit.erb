@@ -1,0 +1,19 @@
+<h2>Editing Party</h2>
+
+<form action="/parties" method='POST'>
+
+<label for="party_id">Table Number:</label>
+<input id="party_id" type="number" name='party[table_id]' min=1 max=8 value=1><br>
+
+<label for="party_guests">Guests:</label>
+<input id="party_guests"type="number" name='party[guests]' min=1 max=6 value=0><br>
+
+<label for="party_paid">Did they pay?</label>
+<% if party[paid] == "false" puts "Sorry the table is currently unavailable" %>
+<select name='party[paid]'>
+	<option id="party_paid" type="text" value="true">Yes</option>
+	<option id="party_paid" type="text" value="false">No</option>
+</select><br>
+
+ <input type="submit" value="Add Party!">
+</form>
