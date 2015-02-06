@@ -4,7 +4,7 @@
 <ul>
 <% @parties.each do |party| %>
 
-   	<li><h3>Table Number:</h3><a href="/parties/<%=party.id%>"> <%= party.table_name %></a></li>
+   	<li><h3>Table Number:</h3><a href="/parties/<%=party.id%>/orders/new"> <%= party.table_name %></a></li>
 
  <% end %>
 </ul>
