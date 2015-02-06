@@ -2,10 +2,10 @@
 
 <form action="/parties" method='POST'>
 
-<label for="table_id">Table Number:</label>
-<select name="party[table_id]">
+<label for="table_name ">Table Number:</label>
+<select name="party[table_name]">
 	<% @available.each do |avail| %>
-<option id="table_id" type="number" value="<%= avail %>"><%= avail %> </option>
+<option id="table_name " type="number" value="<%= avail %>"><%= avail %> </option>
 <% end %>
 </select>
 <br>
@@ -13,11 +13,6 @@
 <label for="party_guests">Guests:</label>
 <input id="party_guests"type="number" name='party[guests]' min=1 max=6 value=0><br>
 
-<label for="party_paid">Did they pay?</label>
-<select name='party[paid]'>
-	<option id="party_paid" type="text" value="true">Yes</option>
-	<option id="party_paid" type="text" value="false">No</option>
-</select><br>
 
  <input type="submit" value="Add Party!">
 </form>

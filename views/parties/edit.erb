@@ -1,18 +1,23 @@
-<h2>Editing Party</h2>
+<h2>Editing <%= @party.table_name %></h2>
 
-<form action="/parties" method='POST'>
+<form action="/parties/<%= @party.id %>" method="POST">
 
-<label for="party_id">Table Number:</label>
-<input id="party_id" type="number" name='party[table_id]' min=1 max=8 value=1><br>
+<label for="party_table_name">Table Name:</label>
+<input id="party_table_name" type="number" name='party[table_name]' min=1 max=8 value=1>
+<br>
 
-<label for="party_guests">Guests:</label>
-<input id="party_guests"type="number" name='party[guests]' min=1 max=6 value=0><br>
 
-<label for="party_paid">Did they pay?</label>
-<select name='party[paid]'>
-	<option id="party_paid" type="text" value="true">Yes</option>
-	<option id="party_paid" type="text" value="false">No</option>
-</select><br>
+<label for="party_guests">No. of Guests:</label>
+<input id="party_guests"type="number" name='party[guests]' min=1 max=6 value=0>
+<br>
 
- <input type="submit" value="Add Party!">
+
+<input type="hidden" name="_method" value="patch">
+<input type="submit" value="Edit Party!">
+</form>
+
+
+<form action="/parties/<%= @party.id %>" method="POST">
+<input type="hidden" name="_method" value="DELETE">
+<input type="submit" value="Delete Party">
 </form>

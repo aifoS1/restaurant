@@ -75,6 +75,7 @@ end
 
 post '/parties' do
 # Pry.start(binding)
+
  party = params[:party]
  partyid = Party.create(party)
  redirect to "/parties/#{partyid.id}"
@@ -86,15 +87,87 @@ get '/parties/:id/edit' do
 end
 
 patch '/parties/:id' do |id|
-  party= Party.find(id)
+   party= Party.find(id)
   party.update(params[:parties])
   redirect to "/parties/#{party.id}"
 end
 
 get '/parties/:id' do |id|
+ @foods = Food.all
  @party = Party.find(id)
+ a = Order.find(id)
+ a.update(receipt_id: id)
 
- erb :"foods/show"
+ @seats = []
+ @party.guests.times do |x|
+  @seats.push(x)
+  end
+      index=1
+     @seats.times do
+
+    a.update(seat_number: index)
+
+    index += 1
+    end
+
+
+   erb :"parties/show"
 end
+
+
+
+
+###ORDERS
+
+get '/orders' do
+
+
+erb :'orders/index'
+end
+
+get '/orders/new' do
+ @order = Order.all
+ # @seats = Order.seats
+ @parties = Party.all
+ @foods = Food.all
+erb :'orders/new'
+end
+
+post '/orders' do
+# Pry.start(binding)
+ order = params[:order]
+ orderid = Order.create(order)
+ redirect to "/orders/#{orderid.id}"
+end
+
+get '/orders/:id/edit' do
+  @order = Order.find(params[:id])
+  erb :'orders/edit'
+end
+
+delete '/orders/:id' do |id|
+  order = Order.find(id)
+  order.destroy
+
+  redirect to "/orders"
+end
+
+patch '/orders/:id' do |id|
+  order = Order.find(id)
+  order.update(params[:order])
+  redirect to "/orders/#{order.id}"
+end
+
+get '/orders/:id' do |id|
+
+ @order = Order.find(id)
+
+ erb :"orders/show"
+  end
+
+
+
+
+
 
 end

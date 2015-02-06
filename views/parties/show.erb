@@ -1,7 +1,28 @@
-<h1><%= @food.name %></h1>
-<h1>Cuisine type: <%= @food.cuisine_type %></h1>
-<h1>Price: $<%= @food.price %></h1>
-<h1>Potential allergens: <%= @food.allergens %></h1>
+
+<h1>Table Number: <%= @party.table_name %></h1>
+<h1>Party of: <%= @party.guests %></h1>
 
 
-<h3><a href="/foods/<%=@food.id %>/edit">Edit item</a></h3>
+<h3><a href="/parties/<%=@party.id %>/edit">Edit Party</a></h3>
+
+
+<% @party.guests.times do %>
+
+<select name ="order[food_id]">
+
+    <% @foods.each do |food| %>
+
+<option id="party_name" type="text" value="<%= food.id %>">
+        <%= food.name %> 
+    </option>
+
+<% end %>
+</select>
+
+
+<label for="order_comped">Comped?</label>
+<input id="order_comped" type="checkbox" name="order[comped]" value="true"></input>
+
+<% end %>
+
+<input type="submit" value="Submit Order">

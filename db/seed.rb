@@ -45,26 +45,26 @@ ActiveRecord::Base.establish_connection(
 
 ##Partys
 
-[
+# [
 
-{ 
-  table_id: nil,
-  guests: 2,
-  paid: "FALSE",
-},
-{ table_id: nil,
-  guests: 4,
-  paid: "TRUE",
-},
-{ table_id: nil,
-  guests: 3,
-  paid: "FALSE",
-}
+# { 
+#   table_id: nil,
+#   guests: 2,
+#   paid: "FALSE",
+# },
+# { table_id: nil,
+#   guests: 4,
+#   paid: "TRUE",
+# },
+# { table_id: nil,
+#   guests: 3,
+#   paid: "FALSE",
+# }
 
 
-].each do |party|
-  Party.create( party)
-end
+# ].each do |party|
+#   Party.create( party)
+# end
 
   ## ORDERS
 
@@ -90,8 +90,32 @@ end
 #     Order.create (order)
 #   end
 
+## ALLERGENS
 
+[
+ {
+   name: "Dairy"
 
+ },
+{
+   name: "Gluten"
 
+ },
+ {
+   name: "Soy"
+
+ },
+{
+   name: "Eggs"
+
+ },
+ {
+   name: "Nuts"
+
+ }
+
+].each do |allergen|
+    Allergen.create (allergen)
+  end
 
 

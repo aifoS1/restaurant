@@ -1,0 +1,7 @@
+<h2>Order ID: <%= @order.id %></h2>
+<p>Receipt ID:<%= @order.receipt_id%></p>
+<p>Food ID:<%= @order.food_id%></p>
+<p>Comped:<%= @order.comped%></p>
+<p>Seats Number:<%= @order.seat_number%></p>
+
+<a href="/orders/<%= @order.id %>/edit">Edit Order</a>

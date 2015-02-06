@@ -1,5 +1,6 @@
-<h1>Table Number: <%= @party.table_id %></h1>
-<h1>Party of: <%= @party.guests %></h1>
+<h1><%= @food.name %></h1>
+<h1>Cuisine type: <%= @food.cuisine_type %></h1>
+<h1>Price: $<%= @food.price %></h1>
 
 
-<h3><a href="/parties/<%=@party.id %>/edit">Edit Party</a></h3>
+<h3><a href="/foods/<%=@food.id %>/edit">Edit item</a></h3>
