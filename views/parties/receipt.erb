@@ -1,0 +1,69 @@
+
+<% if @party.paid  %>
+<h1>RECEIPT - Customer Copy</h1>
+<ul>
+  <% @party.guests.times do |seat_number| %>
+ 
+  <li><p>Seat number: <%= seat_number + 1 %></p></li>
+  <% order = Order.find_by(seat_number: seat_number, party_id: @party.id) %> 
+
+     <% @foods.each do |food| %> 
+	 <% if order.food_id == food.id  %>
+	     <p> <%= food.name %> _ _ _ _ 
+  
+	    <%if order.comped %>
+	       comped.
+      <% else %>
+	   <%= currency (food.price )%>
+	  </p>
+	 </li>
+	   
+       <% end %>
+    <% end %>
+  <% end %>
+ <% end %>
+<ul>
+<p>Order Cost: <%= currency ( @currentTotal )%>  </p>
+<p>Tip Amount: <%= currency ( @tip )%>  </p>
+<p>Total Cost: <%= currency ( @total )%>  </p>
+
+<% else %>
+<h1>RECEIPT</h1>
+<form action="/parties/<%= @party.id %>/receipt" method="POST">
+
+<ul>
+  <% @party.guests.times do |seat_number| %>
+ 
+  <li><p>Seat number: <%= seat_number + 1 %></p></li>
+  <% order = Order.find_by(seat_number: seat_number, party_id: @party.id) %>
+ 
+     <% @foods.each do |food| %> 
+     <% order.food.update(price: 0) if order.comped %>
+	 <% if order.food_id == food.id  %>
+	     <p> <%= food.name %> _ _ _ _ 
+  
+	    <%if order.comped %>
+	       comped.
+      <% else %>
+	   <%= currency (food.price )%>
+	  </p>
+	 </li>
+	   
+       <% end %>
+    <% end %>
+  <% end %>
+ <% end %>
+<ul>
+<p>Tip: <%= currency ( @tip )%> </p>
+
+<p>Total Bill: <%= currency ( @total )%> </p>
+<input type="hidden" name="_method" value="PATCH">
+<input type="hidden" name="party[paid]" value="t">
+<input type="hidden" name="party[total]" value="<%= @total %>">		
+<input type="submit" value="Close Order"> 
+</form>
+
+
+<% end %>
+
+

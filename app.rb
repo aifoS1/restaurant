@@ -7,6 +7,10 @@ require 'active_support/inflector'
 class Restaurant < Sinatra::Base
   register Sinatra::ActiveRecordExtension
   enable :method_override
+ set :default_currency_unit, '$'
+ set :default_currency_precision, 2
+ set :default_currency_separator, ' '
+
 
   get '/console' do
   Pry.start(binding)
@@ -29,7 +33,6 @@ class Restaurant < Sinatra::Base
   end
 
   post '/foods' do
-  # Pry.start(binding)
    food = params[:food]
    item = Food.create(food)
    redirect to "/foods/#{item.id}"
@@ -62,48 +65,51 @@ class Restaurant < Sinatra::Base
   ##PARTIES
 
   get '/parties' do
-
-  @parties= Party.all
+    @parties= Party.all
     erb :'/parties/index'
   end
 
   get '/parties/new' do
-    @available = Party.opentables
-    
+    @available = Party.opentables 
+    @employees = Employee.all
     erb :'parties/new'
   end
 
   post '/parties' do
-  # Pry.start(binding)
-
    party = params[:party]
    partyid = Party.create(party)
+
    redirect to "/parties/#{partyid.id}"
   end
 
+  delete '/parties/:id' do |id|
+   party = Party.find(id)
+    party.destroy
+
+   redirect to "/parties"
+  end
   get '/parties/:id/edit' do
     @party = Party.find(params[:id])
     erb :'parties/edit'
   end
 
   patch '/parties/:id' do |id|
-     party= Party.find(id)
-    party.update(params[:parties])
+    party = Party.find(id)
     redirect to "/parties/#{party.id}"
   end
 
   get '/parties/:id' do |id|
     @party = Party.find(id)
+    @foods = Food.all
+    paidItem= @party.foods.where(:comped == 'f')
+   @currentTotal= paidItem.sum(:price)
+
 
     erb :"parties/show"
   end
 
 
-
-
-  ###ORDERS
-
-
+  ###ORDER
 
   # get '/orders/new' do
   #  @order = Order.all
@@ -116,8 +122,6 @@ class Restaurant < Sinatra::Base
   get '/orders' do
     erb :'orders/index'
   end
-
-
 
   get '/orders/:id/edit' do
     @order = Order.find(params[:id])
@@ -138,29 +142,105 @@ class Restaurant < Sinatra::Base
   end
 
   get '/orders/:id' do |id|
-
    @order = Order.find(id)
-
    erb :"orders/show"
   end
 
-  get '/parties/:party_id/orders/new' do |party_id|
-    @party = Party.find(party_id)
-    @foods = Food.all
-
-    erb :"/orders/new"
-  end
-
-  post '/party/:party_id/orders' do |party_id|
-    params[:order].each do |seat_num, food_hash|
-      Order.create(
-        party_id: party_id, ### SOFIA CHANGE THIS OH FUCK OH FUCK
+  post '/parties/:party_id/orders' do |party_id|
+# Pry.start(binding)
+  params[:order].each do |seat_num, food_hash, comped|
+     
+      order = Order.create(
+        party_id: party_id,
         food_id: food_hash[:food_id],
-        comped: false,
+        comped: food_hash[:comped],
         seat_number: seat_num
       )
-    end
+      end
 
    redirect to "/parties/#{party_id}"
   end
+
+  patch '/parties/:party_id/orders' do |party_id| 
+    @party = Party.find(party_id)
+    params[:order].each do |seat_number, food_hash|
+      order = Order.find_by(
+        seat_number: seat_number, party_id: @party.id
+      )
+      order.update(
+        food_id: food_hash[:food_id],   
+      )
+    end
+    params[:order].each do |seat_number, comped|
+      compOrder = Order.find_by(
+        seat_number: seat_number, party_id: @party.id
+      )
+      compOrder.update(
+         comped: comped[:comped]
+        )
+    end
+   redirect to "/parties/#{party_id}"
+ end
+
+ get '/parties/:id/receipt' do |id|
+   @party = Party.find(id)
+   @foods = Food.all
+   @currentTotal = @party.total
+  # tipAmt = params[:party][:tip].to_d
+   tipAmt = @party.tip.to_d
+   @tip = @currentTotal * tipAmt
+   @total = @currentTotal + @tip
+    erb :'parties/receipt'
+ end
+
+ patch '/parties/:id/receipt' do |id|
+   # Pry.start(binding)
+  party = Party.find(id)
+  party.update(params[:party])
+  @currentTotal = party.total
+Pry.start(binding)
+  redirect to "/parties/#{id}/receipt"
+ end
+
+##EMPLOYEES#########################################
+
+get '/employees' do
+ @employees = Employee.all
+ erb :'employees/index'
+end
+
+get '/employees/new' do
+ erb :'employees/new'
+end
+
+post '/employees' do 
+    employee =Employee.create(params[:employee])
+    redirect to "/employees/#{employee.id}"
+end
+
+get '/employees/:id' do |id|
+  @employee = Employee.find(id)
+  @party = Party.find_by(employee_id: id)
+  erb :'employees/show'
+end
+
+get '/employees/:id/edit' do |id|
+ @employee = Employee.find(id)
+ erb :'employees/edit'
+end
+
+patch '/employees/:id' do |id|
+    employee = Employee.find(id)
+    employee.update(params[:employee])
+    redirect to "/employees/#{employee.id}"
+end
+
+delete '/employees/:id' do |id|
+    employee = Employee.find(id)
+    employee.destroy
+    redirect to "/employees"
+end
+
+
+
 end

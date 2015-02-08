@@ -2,25 +2,106 @@
 <h1>Table Number: <%= @party.table_name %></h1>
 <h1>Party of: <%= @party.guests %></h1>
 
-<h3><a href="/orders">Edit Party</a></h3>
-<p>Total Guests: <%= @party.guests %></p>
+<% if @party.orders.any? %>
+	<form action="/parties/<%= @party.id %>/orders" method='POST'>
+	    <% @party.guests.times do |seat_number| %>
+	        <label>Seat number: <%= seat_number + 1 %></label>
+	        <select name ="order[<%= seat_number %>][food_id]">
+	       	<% order = Order.find_by(seat_number: seat_number, party_id: @party.id) %>
+	        <% @foods.each do |food| %> 
+	            <option id="party_name" 
+	                    type="text" 
+	                    value="<%= food.id %>"
+	                    <%= "selected" if order.food_id == food.id %>>
+	            <%= food.name %> 
+	            </option> 
+	          <% end %>
+  
+	<input type="checkbox" name="order[<%= seat_number %>][comped]" value="true" <%= "checked" if order.comped %>>Comp</input>
 
-<% @party.orders.each do |o| %>
+    </select>
+	  <br/>
+ <% end %>
+ <br/>
+    <input type="hidden" 
+          name="_method" 
+          value="PATCH">
+	    <input type="submit" value="Update Order"> 
+	</form>
+  <br/>
+</form>
+<form action='/parties/<%= @party.id %>/receipt' 
+	method="POST">
+ <h2>Receipt</h2>
+      <ul>
+  <% @party.guests.times do |seat_number| %>
+ 
+  <li><p>Seat number: <%= seat_number + 1 %></p></li>
+  <% order = Order.find_by(seat_number: seat_number, party_id: @party.id) %>
+     <% @foods.each do |food| %> 
+     
+	 <% if order.food_id == food.id  %>
+	     <p> <%= food.name %> _ _ _ _ 
+  
+	    <%if order.comped %>
+	       comped.
+      <% else %>
+	   <%= currency (food.price )%>
+	  </p>
+	 </li>
+	   
+       <% end %>
+    <% end %>
+  <% end %>
+ <% end %>
+<ul>
+<p>Total: <%= currency ( @currentTotal )%> </p>
 
-	<p>Seat <%= o.seat_number %>: <%= o.food.name %></p>
+ <label for="tip" name="party[tip]">Suggested Tip:</label>
+15%<input id="tip" type="checkbox" name="party[tip]" value=".15">
+20%<input id="tip" type="checkbox" name="party[tip]" value=".20">
+25%<input id="tip" type="checkbox" name="party[tip]" value=".25">
+
+	<p>Tip:____________________</p>
+	<p>Total:___________________</p>
+   <input type="hidden" 
+          name="_method" 
+          value="PATCH"> 
+    <input type="hidden" name="party[total]" value="<%= @currentTotal %>"> 
+	<input type="submit" value="Check out"> 
+</form>
+
+
+
+
+<% else %>
+
+	<form action="/parties/<%= @party.id %>/orders" method='POST'>
+	    <% @party.guests.times do |seat_number| %>
+	        <label>Seat number: <%= seat_number + 1 %></label>
+	        <select name ="order[<%= seat_number %>][food_id]">
+	        <% @foods.each do |food| %> 
+	            <option id="party_name" 
+	                            type="text" 
+	                            value="<%= food.id %>">
+	            <%= food.name %> 
+	            </option>
+	            <% end %>
+            
+<input type="checkbox" name="order[<%= seat_number %>][comped]" value="true">Comp</input>
+
+	        </select>
+	        <br/>
+	    <% end %>
+	      <br/>
+	    <input type="submit" value="Create New Order"> 
+	</form>
+   <a href="/parties/<%= @party.id %>/edit"><button type="text" value="Edit Party">Edit Party</a>
+
 <% end %>
 
-<!-- <label> Comped? </label>
-<select for="order_comped"name="order[][comped]">
-<input type='hidden' name='order[comped][]'value="false">
-
-<option id="order_comped" type="text" value="true">True</option>
-<option id="order_comped" type="text" value="false">False</option>
-</select>
- <br/> -->
+     
 
 
-
-
-<!-- </a>
-<a href="/orders/<%= @party.id%>" -->
+ 
+<!-- I need a form which patches party and has a tip field and a hidden field which sets a party.paid to true -->

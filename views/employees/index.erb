@@ -1,0 +1,13 @@
+<h1>Current Employees</h1>
+
+ <% @employees.each do |employee| %>
+
+  <h3><a href="/employees/<%= employee.id %>">
+	 <%= employee.name %>
+     </a>
+  </h3>
+
+ <% end %>
+
+<h2><a href="/employees/new">Add a new employee</a></h2>
+

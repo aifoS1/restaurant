@@ -1,0 +1,12 @@
+<h2>Editing <%= @employee.name %></h2>
+
+<form action="/employees/<%= @employee.id %>" method="POST">
+
+<label for="employee_name">Name:</label>
+<input id="employee_name" type="text" name='employee[name]' value="<%= @employee.name%>"><br>
+
+
+<form action="/employees/<%= @employee.id %>" method="POST">
+ <input type="hidden" name="_method" value="DELETE">
+ <input type="submit" value="Delete Employee">
+</form>

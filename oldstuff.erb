@@ -1,0 +1,62 @@
+
+<% if @party.paid %>
+		<h3>Bill Closed Out</h3>
+		<% @party.guests.times do |seat_number| %>
+		<% order = Order.find_by(seat_number: seat_number, party_id: @party.id) %>
+		<% order.update(price: 0) if order.comped == 't'  %>
+       <% end %>
+		<p>Order Total: $ <%= @party.foods.sum(:price) %></p>
+		<p>Tip: <%= currency ( @party.tip) %></p>
+		<p>Bill Total: <%= @party.foods.sum(:price) + @party.tip%></p>
+
+	<!-- ADD a form to close the party... -->
+	<% else %>
+		<form action="/parties/<%= @party.id %>" method="post">
+
+			<label for="tip">Tip: </label>
+			<input id="tip" type="text" name="party[tip]">
+		
+		    
+			<input type="hidden" name="party[paid]" value="t">
+
+			<input type="hidden" name="_method" value="patch">
+			<input type="submit" value="Close Order"> 
+		</form>
+	<% end %>
+
+
+ <% order.update(price: 0) if order.comped == 't'  %>
+
+
+
+
+
+
+
+
+
+
+
+<% @party.orders.each do |o| %>
+
+<p>Seat <%= o.seat_number + 1  %> order: <%= o.food.name %></p>
+  <form action="/orders/<%= o.id %>" method ="POST">
+	<input type="hidden" name="_method" value="patch">
+	<input type="submit" name="order[food_id]" value="change Food">
+	  <select
+  </form> 
+<p>Price: $<%= o.food.price %></p>
+
+
+  
+   <form action="/orders/<%= o.id %>" method ="POST">
+	<input type="hidden" name="_method" value="patch">
+	<input type="submit" name="order[comped]" value="true">
+  </form> 
+
+<% end %>
+
+<p>Total: <%= @party.foods.sum(:price)%></p>
+
+
+<!--    ####<input type="text" name="party[total]" value="<%= @party.foods.sum(:###price) + @party.tip%>"> -->
