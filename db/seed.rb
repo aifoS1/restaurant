@@ -51,7 +51,7 @@ CREATE TABLE allergens (
   id SERIAL PRIMARY KEY,
   name TEXT,
   created_at TIMESTAMP,
-  updated_at TIMESTAMP,
+  updated_at TIMESTAMP
 
   );
 
@@ -60,9 +60,17 @@ CREATE TABLE food_allergens (
   food_id INT,
   allergen_id INT,
   created_at TIMESTAMP,
-  updated_at TIMESTAMP,
+  updated_at TIMESTAMP
   );
- SQL
+ SQL)
+
+CREATE TABLE employees (
+  id SERIAL PRIMARY KEY,
+  name TEXT,
+  created_at TIMESTAMP,
+  updated_at TIMESTAMP
+  );
+ SQL)
 
 ##FOODS
 [
@@ -96,21 +104,21 @@ end
 [
 
 { 
-  table_id: nil,
+  table_name: nil,
   guests: 2,
   paid: "FALSE",
     tip: nil,
     total: nil,
     employee_id: nil
 },
-{ table_id: nil,
+{ table_name: nil,
   guests: 4,
   paid: "TRUE",
     tip: nil,
     total: nil,
     employee_id: nil
 },
-{ table_id: nil,
+{ table_name: nil,
   guests: 3,
   paid: "FALSE",
      tip: nil,
