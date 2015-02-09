@@ -13,17 +13,17 @@ ActiveRecord::Base.establish_connection(
 
   )
 
-CREATE TABLE foods (<<-SQL
+ActiveRecord::Base.connection.execute(<<-SQL
+CREATE TABLE foods (
   id SERIAL PRIMARY KEY,
   name varchar NOT NULL,
   cuisine_type varchar NOT NULL,
   price numeric NOT NULL,
   created_at TIMESTAMP,
   updated_at TIMESTAMP,
-  SQL
   );
 
-CREATE TABLE parties (<<-SQL
+CREATE TABLE parties (
   id SERIAL PRIMARY KEY,
   table_name INT NOT NULL,
   guests INT NOT NULL,
@@ -33,10 +33,10 @@ CREATE TABLE parties (<<-SQL
   employee_id INT,
   created_at TIMESTAMP,
   updated_at TIMESTAMP,
-  SQL
+
   );
 
-CREATE TABLE orders (<<-SQL
+CREATE TABLE orders (
   id SERIAL PRIMARY KEY,
   party_id INT NOT NULL,
   food_id INT,
@@ -44,116 +44,115 @@ CREATE TABLE orders (<<-SQL
   comped BOOLEAN default 'f',
   created_at TIMESTAMP,
   updated_at TIMESTAMP,
-  SQL
+
   );
 
-CREATE TABLE allergens (<<-SQL
+CREATE TABLE allergens (
   id SERIAL PRIMARY KEY,
   name TEXT,
   created_at TIMESTAMP,
   updated_at TIMESTAMP,
-  SQL
+
   );
 
-CREATE TABLE food_allergens (<<-SQL
+CREATE TABLE food_allergens (
   id SERIAL PRIMARY KEY,
   food_id INT,
   allergen_id INT,
   created_at TIMESTAMP,
   updated_at TIMESTAMP,
-  SQL
   );
-
+ SQL
 
 ##FOODS
-# [
+[
 
-# {
-#   name: "Cheeseburger",
-#   cuisine_type: "Sandwich",
-#   price: 6,
+{
+  name: "Cheeseburger",
+  cuisine_type: "Sandwich",
+  price: 6,
 
-# },
-# {
-#   name: "Grilled Cheese",
-#   cuisine_type: "Sandwich",
-#   price: 4,
+},
+{
+  name: "Grilled Cheese",
+  cuisine_type: "Sandwich",
+  price: 4,
 
-# },
-# {
-#   name: "Western Omelet",
-#   cuisine_type: "Breakfast",
-#   price: 6,
+},
+{
+  name: "Western Omelet",
+  cuisine_type: "Breakfast",
+  price: 6,
 
-# }
-
-
-# ].each do |food|
-#   Food.create( food)
-# end
-
-##Partys
-
-# [
-
-# { 
-#   table_id: nil,
-#   guests: 2,
-#   paid: "FALSE",
-    # tip: nil,
-    # total: nil,
-    # employee_id: nil
-# },
-# { table_id: nil,
-#   guests: 4,
-#   paid: "TRUE",
-    # tip: nil,
-    # total: nil,
-    # employee_id: nil
-# },
-# { table_id: nil,
-#   guests: 3,
-#   paid: "FALSE",
-    #  tip: nil,
-    # total: nil,
-    # employee_id: nil
-# }
+}
 
 
-# ].each do |party|
-#   Party.create( party)
-# end
+].each do |food|
+  Food.create( food)
+end
 
-  ## ORDERS
+#Partys
 
-#   [
+[
 
-# {
-#   party_id: nil,
-#   food_id: nil,
-     # seat_number: nil,
-     # comped: nil
+{ 
+  table_id: nil,
+  guests: 2,
+  paid: "FALSE",
+    tip: nil,
+    total: nil,
+    employee_id: nil
+},
+{ table_id: nil,
+  guests: 4,
+  paid: "TRUE",
+    tip: nil,
+    total: nil,
+    employee_id: nil
+},
+{ table_id: nil,
+  guests: 3,
+  paid: "FALSE",
+     tip: nil,
+    total: nil,
+    employee_id: nil
+}
 
-# },
-# {
-#   party_id: nil,
-# #  food_id: nil,
-#    seat_number: nil,
-#     comped: nil
+
+].each do |party|
+  Party.create( party)
+end
+
+  # ORDERS
+
+  [
+
+{
+  party_id: nil,
+  food_id: nil,
+     seat_number: nil,
+     comped: nil
+
+},
+{
+  party_id: nil,
+#  food_id: nil,
+   seat_number: nil,
+    comped: nil
 
 
-# },
-# {
-#   party_id: nil,
-#   food_id: nil,
-    # seat_number: nil,
-    #  comped: nil
+},
+{
+  party_id: nil,
+  food_id: nil,
+    seat_number: nil,
+     comped: nil
 
-# }
+}
 
-#   ].each do |order|
-#     Order.create (order)
-#   end
+  ].each do |order|
+    Order.create (order)
+  end
 
 ## ALLERGENS
 
