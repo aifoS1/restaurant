@@ -1,8 +1,10 @@
 <h1>Employee Name: <%= @employee.name %> </h1>
 
 <h1>Employee Id: <%= @party.employee_id %> </h1>
+<% @employee.parties.each do |party| %> 
 
-
-
-
+         <h3>Parties Served: <%= currency (party.table_name) %> </h3>
+          <h3>Party Order Total: <%= currency (party.total) %> </h3>
+      <h3>Party Order TIP: <%= currency (party.tip )%> </h3>
+  <% end %>
 <h2><a href="/employees/<%=@employee.id %>/edit">Edit employee</a></h2>

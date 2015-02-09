@@ -23,9 +23,9 @@
   <% end %>
  <% end %>
 <ul>
-<p>Order Cost: <%= currency ( @currentTotal )%>  </p>
-<p>Tip Amount: <%= currency ( @tip )%>  </p>
-<p>Total Cost: <%= currency ( @total )%>  </p>
+<p>Order Cost: <%= currency( @currentTotal )%>  </p>
+<p>Tip Amount: <%=currency(@party.tip) %>  </p>
+<p>Total Cost: <%= currency( @total ) %>  </p>
 
 <% else %>
 <h1>RECEIPT</h1>
@@ -38,7 +38,7 @@
   <% order = Order.find_by(seat_number: seat_number, party_id: @party.id) %>
  
      <% @foods.each do |food| %> 
-     <% order.food.update(price: 0) if order.comped %>
+    
 	 <% if order.food_id == food.id  %>
 	     <p> <%= food.name %> _ _ _ _ 
   
@@ -54,7 +54,7 @@
   <% end %>
  <% end %>
 <ul>
-<p>Tip: <%= currency ( @tip )%> </p>
+<p>Tip: <%= currency ( @party.tip )%> </p>
 
 <p>Total Bill: <%= currency ( @total )%> </p>
 <input type="hidden" name="_method" value="PATCH">

@@ -2,7 +2,7 @@
 
 class Party < ActiveRecord::Base
   
-has_many :orders
+has_many :orders, dependent: :destroy
 has_many :foods, through: :orders
 has_many :employees
 
@@ -18,12 +18,11 @@ def self.opentables
    return table - unavailble
   end
 
-def self.Total
+def self.tip(tip)
 
    
    
 end
-
 
 
 end

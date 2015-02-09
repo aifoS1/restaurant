@@ -39,7 +39,7 @@
   <li><p>Seat number: <%= seat_number + 1 %></p></li>
   <% order = Order.find_by(seat_number: seat_number, party_id: @party.id) %>
      <% @foods.each do |food| %> 
-     
+        
 	 <% if order.food_id == food.id  %>
 	     <p> <%= food.name %> _ _ _ _ 
   
@@ -48,19 +48,18 @@
       <% else %>
 	   <%= currency (food.price )%>
 	  </p>
-	 </li>
-	   
+	 </li>  
        <% end %>
     <% end %>
   <% end %>
  <% end %>
 <ul>
-<p>Total: <%= currency ( @currentTotal )%> </p>
+<p>Sub Total: <%= currency ( @currentTotal )%> </p>
 
  <label for="tip" name="party[tip]">Suggested Tip:</label>
-15%<input id="tip" type="checkbox" name="party[tip]" value=".15">
-20%<input id="tip" type="checkbox" name="party[tip]" value=".20">
-25%<input id="tip" type="checkbox" name="party[tip]" value=".25">
+15%<input id="tip" type="checkbox" name="party[tip]" value="<%= currency (@currentTotal * 0.15).to_d %>">
+20%<input id="tip" type="checkbox" name="party[tip]" value="<%=currency ( @currentTotal * 0.20).to_d %>">
+25%<input id="tip" type="checkbox" name="party[tip]" value="<%=currency (@currentTotal * 0.25).to_d %>">
 
 	<p>Tip:____________________</p>
 	<p>Total:___________________</p>
@@ -70,8 +69,6 @@
     <input type="hidden" name="party[total]" value="<%= @currentTotal %>"> 
 	<input type="submit" value="Check out"> 
 </form>
-
-
 
 
 <% else %>

@@ -13,6 +13,58 @@ ActiveRecord::Base.establish_connection(
 
   )
 
+CREATE TABLE foods (<<-SQL
+  id SERIAL PRIMARY KEY,
+  name varchar NOT NULL,
+  cuisine_type varchar NOT NULL,
+  price numeric NOT NULL,
+  created_at TIMESTAMP,
+  updated_at TIMESTAMP,
+  SQL
+  );
+
+CREATE TABLE parties (<<-SQL
+  id SERIAL PRIMARY KEY,
+  table_name INT NOT NULL,
+  guests INT NOT NULL,
+  paid BOOLEAN default 'f',
+  tip numeric,
+  total numeric,
+  employee_id INT,
+  created_at TIMESTAMP,
+  updated_at TIMESTAMP,
+  SQL
+  );
+
+CREATE TABLE orders (<<-SQL
+  id SERIAL PRIMARY KEY,
+  party_id INT NOT NULL,
+  food_id INT,
+  seat_number INT,
+  comped BOOLEAN default 'f',
+  created_at TIMESTAMP,
+  updated_at TIMESTAMP,
+  SQL
+  );
+
+CREATE TABLE allergens (<<-SQL
+  id SERIAL PRIMARY KEY,
+  name TEXT,
+  created_at TIMESTAMP,
+  updated_at TIMESTAMP,
+  SQL
+  );
+
+CREATE TABLE food_allergens (<<-SQL
+  id SERIAL PRIMARY KEY,
+  food_id INT,
+  allergen_id INT,
+  created_at TIMESTAMP,
+  updated_at TIMESTAMP,
+  SQL
+  );
+
+
 ##FOODS
 # [
 
@@ -20,21 +72,18 @@ ActiveRecord::Base.establish_connection(
 #   name: "Cheeseburger",
 #   cuisine_type: "Sandwich",
 #   price: 6,
-#   allergens: "dairy"
 
 # },
 # {
 #   name: "Grilled Cheese",
 #   cuisine_type: "Sandwich",
 #   price: 4,
-#   allergens: "dairy"
 
 # },
 # {
 #   name: "Western Omelet",
 #   cuisine_type: "Breakfast",
 #   price: 6,
-#   allergens: "eggs, dairy"
 
 # }
 
@@ -51,14 +100,23 @@ ActiveRecord::Base.establish_connection(
 #   table_id: nil,
 #   guests: 2,
 #   paid: "FALSE",
+    # tip: nil,
+    # total: nil,
+    # employee_id: nil
 # },
 # { table_id: nil,
 #   guests: 4,
 #   paid: "TRUE",
+    # tip: nil,
+    # total: nil,
+    # employee_id: nil
 # },
 # { table_id: nil,
 #   guests: 3,
 #   paid: "FALSE",
+    #  tip: nil,
+    # total: nil,
+    # employee_id: nil
 # }
 
 
@@ -72,17 +130,24 @@ ActiveRecord::Base.establish_connection(
 
 # {
 #   party_id: nil,
-#   food_id: nil
+#   food_id: nil,
+     # seat_number: nil,
+     # comped: nil
 
 # },
 # {
 #   party_id: nil,
-#   food_id: nil
+# #  food_id: nil,
+#    seat_number: nil,
+#     comped: nil
+
 
 # },
 # {
 #   party_id: nil,
-#   food_id: nil
+#   food_id: nil,
+    # seat_number: nil,
+    #  comped: nil
 
 # }
 
