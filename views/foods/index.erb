@@ -1,13 +1,13 @@
 <h1>Current Menu</h1>
 <h3>
-	<a href="/foods/new">Add a new food to the menu!</a>
+	<div class="button"><a href="/foods/new">Add a new food to the menu!</a></div>
 </h3>
 <ul>
 <% @menu.each do |food| %>
 
    	<li>
 <p><a href="/foods/<%=food.id%>">
-	<%= food.name %> <%= currency (food.price) %>
+	<%= food.name %>_______<%= currency (food.price) %>
 </a></p>	
    	</li>
 

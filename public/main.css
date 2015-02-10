@@ -3,21 +3,19 @@ body {
 	font-family: helvetica, sans-serif;
 	font-size: 100%;
 	text-align: center;	
-	background-color: #F5F5F5;
+	background-color: #F0FFF0;
+		
 }
-
 #container{
 	margin: 0 auto;
 	width: 960px;
-
+}
+input {
+	color: black;
 }
 header{
 	margin-bottom: 50px;
 }
-
-/*h1 {
-	text-align: center;	
-}*/
 
 nav ul li  {
 	display: inline;
@@ -37,13 +35,48 @@ li {
 	text-decoration: none;
 	border-radius: 3px;
 	padding: 15px 20px;
+	color: #696969;
+}
+a:hover{
+	color: #FFD700;
 }
 
 fieldset {
 	display: inline;
 	padding: 15px;
 }
-
+ .button a {	
+	display: inline-block;
+   border-top: 1px solid #96d1f8;
+   background: #374a57;
+   background: -webkit-gradient(linear, left top, left bottom, from(#d5e6f2), to(#374a57));
+   background: -webkit-linear-gradient(top, #d5e6f2, #374a57);
+   background: -moz-linear-gradient(top, #d5e6f2, #374a57);
+   background: -ms-linear-gradient(top, #d5e6f2, #374a57);
+   background: -o-linear-gradient(top, #d5e6f2, #374a57);
+   padding: 5px 8px;
+   -webkit-border-radius: 8px;
+   -moz-border-radius: 8px;
+   border-radius: 8px;
+   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   box-shadow: rgba(0,0,0,1) 0 1px 0;
+   text-shadow: rgba(0,0,0,.4) 0 1px 0;
+   color: white;
+   font-size: 14px;
+   font-family: 'Lucida Grande', Helvetica, Arial, Sans-Serif;
+   text-decoration: none;
+   vertical-align: middle;
+   }
+.button:hover {
+   border-top-color: #28597a;
+   background: #28597a;
+   color: #ccc;
+   }
+.button:active {
+   border-top-color: #1b435e;
+   background: #1b435e;
+   }
 .party_box {
 	text-align: center;	
     display: inline-block;
@@ -51,12 +84,11 @@ fieldset {
 	padding: 5px;
 	margin-right: 5px;
 	clear: both;
-	background-color: #EEE8AA;	
+	background-color: #8FBC8F;	
 };
 .party_box:active{
 	background-color: #008080;
 }
-
 .order-box {
 	text-align: center;	
     display: inline-block;
@@ -64,6 +96,7 @@ fieldset {
 	padding: 5px;
 	margin-right: 5px;
 	clear: both;
+	background-color: #8FBC8F;
 }
 .error {
   color: red;
