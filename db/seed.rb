@@ -20,7 +20,7 @@ CREATE TABLE foods (
   cuisine_type varchar NOT NULL,
   price numeric NOT NULL,
   created_at TIMESTAMP,
-  updated_at TIMESTAMP,
+  updated_at TIMESTAMP
   );
 
 CREATE TABLE parties (
@@ -32,7 +32,7 @@ CREATE TABLE parties (
   total numeric,
   employee_id INT,
   created_at TIMESTAMP,
-  updated_at TIMESTAMP,
+  updated_at TIMESTAMP
 
   );
 
@@ -43,7 +43,7 @@ CREATE TABLE orders (
   seat_number INT,
   comped BOOLEAN default 'f',
   created_at TIMESTAMP,
-  updated_at TIMESTAMP,
+  updated_at TIMESTAMP
 
   );
 

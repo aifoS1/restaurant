@@ -4,6 +4,7 @@ end
 
 require 'date'
 require 'active_support/inflector'
+require 'sass'
 
 class Restaurant < Sinatra::Base
   register Sinatra::ActiveRecordExtension
@@ -17,6 +18,15 @@ class Restaurant < Sinatra::Base
   Pry.start(binding)
   ""
   end
+
+ configure do
+   set :scss, {:style => :compressed, :debug_info => false}
+ end
+
+ get '/css/:name.css' do |name|
+  content_type :css
+  scss "../public/sass/#{name}".to_sym, :layout => false
+ end
 
   get '/' do
     erb :index
@@ -102,9 +112,10 @@ class Restaurant < Sinatra::Base
   get '/parties/:id' do |id|
     @party = Party.find(id)
     @foods = Food.all
-     # Pry.start(binding) 
-  paidItem= @party.foods.where(:comped == 'f')
-  @currentTotal= paidItem.sum(:price)
+     # Pry.start(binding)
+     if @party.orders.any? 
+   @currentTotal = @party.total 
+   end
 
     erb :"parties/show"
   end
@@ -147,9 +158,9 @@ class Restaurant < Sinatra::Base
    erb :"orders/show"
   end
 
-  post '/parties/:party_id/orders' do |party_id|
-# Pry.start(binding)
-  params[:order].each do |seat_num, food_hash, comped|
+   post '/parties/:party_id/orders' do |party_id|
+
+  params[:order].each do |seat_num, food_hash|
      
       order = Order.create(
         party_id: party_id,
@@ -163,7 +174,7 @@ class Restaurant < Sinatra::Base
   end
 
   patch '/parties/:party_id/orders' do |party_id|
-  # Pry.start(binding) 
+   # Pry.start(binding) 
     @party = Party.find(party_id)
     params[:order].each do |seat_number, food_hash|
       order = Order.find_by(
@@ -175,38 +186,25 @@ class Restaurant < Sinatra::Base
 
       )
     end
-    # params[:order].each do |seat_number, comped|
-    #   compOrder = Order.find_by(
-    #     seat_number: seat_number, party_id: @party.id
-    #   )
-    #   compOrder.update(
-    #      comped: comped[:comped]
-    #     )
-    # end
    redirect to "/parties/#{party_id}"
  end
 
  get '/parties/:id/receipt' do |id|
-   @party = Party.find(id)
-   @foods = Food.all
-    # Pry.start(binding)
-  paidItem= @party.foods.where(:comped == 'f')
-   @currentTotal = paidItem.sum(:price)
-   
+  @foods = Food.all
+  @party= Party.find(id) 
+ 
+   @currentTotal = @party.total
    # tipAmt = params[:party][:tip]
-   # tipAmt = @party.tip.to_d
-   # @tip = @currentTotal * tipAmt
-   @total = @currentTotal + @party.tip
+
+    @total =  @currentTotal + (@party.tip || 0.0 )
     erb :'parties/receipt'
  end
 
  patch '/parties/:id/receipt' do |id|
-  
-   @party= Party.find(id)
-   Pry.start(binding)
-  @party.update(params[:party])
-  paidItem= @party.foods.where(:comped == 'f')
-  @currentTotal= paidItem.sum(:price)
+   @party= Party.find(id) 
+   @party.update(params[:party])
+   @currentTotal = @party.total
+
  
   redirect to "/parties/#{id}/receipt"
  end

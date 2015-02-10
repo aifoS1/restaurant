@@ -1,5 +1,26 @@
 
-<% if @party.paid %>
+<form action="/parties/<%= @party.id %>/orders" method='POST'>
+	    <% @party.guests.times do |seat_number| %>
+
+	       <label>Seat number: <%= seat_number + 1 %></label>
+	        <select name ="order[<%= seat_number %>][food_id]">
+	       	<% order = Order.find_by(seat_number: seat_number, party_id: @party.id) %>
+	        <% @foods.each do |food| %> 
+	            <option id="party_name" 
+	                    type="text" 
+	                    value="<%= food.id %>"
+	                    <%= "selected" if order.food_id == food.id %>>
+	            <%= food.name %> 
+	            </option> 
+
+
+
+
+
+
+
+
+% if @party.paid %>
 		<h3>Bill Closed Out</h3>
 		<% @party.guests.times do |seat_number| %>
 		<% order = Order.find_by(seat_number: seat_number, party_id: @party.id) %>

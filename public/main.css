@@ -2,17 +2,38 @@ body {
 	margin-top: 20px;
 	font-family: helvetica, sans-serif;
 	font-size: 100%;
-	/*margin: 0 auto;*/
+	/*text-align: center;*/
 }
-
 nav ul li  {
 	display: inline;
 }
 
-nav a {
+li {
+	list-style-type: none;
+}
+ nav a {
+  border: solid grey;
+  background-color: #778899;
+  color: white;
+
+ }
+
+ a {
 	text-decoration: none;
-	border-radius: 5px;
-	border: solid grey;
+	border-radius: 3px;
 	padding: 10px;
+}
+
+fieldset {
+	display: inline;
+	padding: 15px;
+}
+
+.party_box {
+	text-align: center;	
+    display: inline-block;
+	border: solid 1px black;
+	padding: 5px;
+	margin-right: 5px;
 
 }

@@ -1,10 +1,10 @@
 
-
 class Party < ActiveRecord::Base
   
 has_many :orders, dependent: :destroy
 has_many :foods, through: :orders
 has_many :employees
+accepts_nested_attributes_for :foods
 
 
 def self.opentables
@@ -18,19 +18,12 @@ def self.opentables
    return table - unavailble
   end
 
-def self.tip(tip)
-
-   
-   
+def total 
+    paidItems= orders.where(comped: false)
+    @currentTotal =0
+    paidItems.each do |order|
+       @currentTotal += order.food.price if order.food
+    end
+     @currentTotal 
+ end
 end
-
-
-end
-
-
-# @opentable = (SELECT 
-# * 
-# FROM 
-# parties
-# Where 
-# paid = false;

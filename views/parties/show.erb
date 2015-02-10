@@ -5,8 +5,9 @@
 <% if @party.orders.any? %>
 	<form action="/parties/<%= @party.id %>/orders" method='POST'>
 	    <% @party.guests.times do |seat_number| %>
+	    <fieldset for="order_food">
 	        <label>Seat number: <%= seat_number + 1 %></label>
-	        <select name ="order[<%= seat_number %>][food_id]">
+	        <select name= "order[<%= seat_number %>][food_id]">
 	       	<% order = Order.find_by(seat_number: seat_number, party_id: @party.id) %>
 	        <% @foods.each do |food| %> 
 	            <option id="party_name" 
@@ -16,24 +17,26 @@
 	            <%= food.name %> 
 	            </option> 
 	          <% end %>
-  
-	<input type="checkbox" name="order[<%= seat_number %>][comped]" value="true" <%= "checked" if order.comped %>>Comp</input>
+  	<input type="hidden" name="order[<%= seat_number %>][comped]" value="0">
+	<input type="checkbox" name="order[<%= seat_number %>][comped]" value="1" <%= "checked" if order.comped %>>Comp</input>
 
     </select>
-	  <br/>
+    </fieldset>
+	 <br/>
+
  <% end %>
  <br/>
     <input type="hidden" 
           name="_method" 
           value="PATCH">
-	    <input type="submit" value="Update Order"> 
+	    <input type="submit" value="Create or Update Order"> 
 	</form>
   <br/>
 </form>
 <form action='/parties/<%= @party.id %>/receipt' 
 	method="POST">
  <h2>Receipt</h2>
-      <ul>
+
   <% @party.guests.times do |seat_number| %>
  
   <li><p>Seat number: <%= seat_number + 1 %></p></li>
@@ -54,12 +57,12 @@
   <% end %>
  <% end %>
 <ul>
-<p>Sub Total: <%= currency ( @currentTotal )%> </p>
+<p>Sub Total: <%= @currentTotal %> </p>
 
  <label for="tip" name="party[tip]">Suggested Tip:</label>
-15%<input id="tip" type="checkbox" name="party[tip]" value="<%= currency (@currentTotal * 0.15).to_d %>">
-20%<input id="tip" type="checkbox" name="party[tip]" value="<%=currency ( @currentTotal * 0.20).to_d %>">
-25%<input id="tip" type="checkbox" name="party[tip]" value="<%=currency (@currentTotal * 0.25).to_d %>">
+15%<input id="tip" type="checkbox" name="party[tip]" value="<%= @currentTotal * 0.15.to_d %>">
+20%<input id="tip" type="checkbox" name="party[tip]" value="<%= @currentTotal * 0.20.to_d %>">
+25%<input id="tip" type="checkbox" name="party[tip]" value="<%=@currentTotal * 0.25.to_d %>">
 
 	<p>Tip:____________________</p>
 	<p>Total:___________________</p>
@@ -84,8 +87,8 @@
 	            <%= food.name %> 
 	            </option>
 	            <% end %>
-            
-<input type="checkbox" name="order[<%= seat_number %>][comped]" value="true">Comp</input>
+ <input type="hidden" name="order[<%= seat_number %>][comped]" value="0">           
+<input type="checkbox" name="order[<%= seat_number %>][comped]" value="1">Comp</input>
 
 	        </select>
 	        <br/>
