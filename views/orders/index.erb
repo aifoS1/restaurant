@@ -1,0 +1,16 @@
+<h1>Today's Orders</h1>
+
+<% todays_orders = @orders.select do |order| %>
+  <% order.created_at > Date.yesterday %>
+  <% end %>
+
+<% todays_orders.each do |order| %>	
+  <% if order.created_at > Date.yesterday %>
+  <ul class="order-box">
+	<li><a href="/orders/<%=order.id %>">
+		<p>Party ID: <%= order.party_id %></p>
+		</a> 
+	   </li>
+   </ul>
+	<% end %>
+	<% end %>

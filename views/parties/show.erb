@@ -11,11 +11,11 @@
 	       	<% order = Order.find_by(seat_number: seat_number, party_id: @party.id) %>
 	        <% @foods.each do |food| %> 
 	            <option id="party_name" 
-	                    type="text" 
+	                    type="text" ss
 	                    value="<%= food.id %>"
 	                    <%= "selected" if order.food_id == food.id %>>
 	            <%= food.name %> 
-	            </option> 
+	            </option>
 	          <% end %>
   	<input type="hidden" name="order[<%= seat_number %>][comped]" value="0">
 	<input type="checkbox" name="order[<%= seat_number %>][comped]" value="1" <%= "checked" if order.comped %>>Comp</input>
@@ -35,8 +35,8 @@
 </form>
 <form action='/parties/<%= @party.id %>/receipt' 
 	method="POST">
+<section id="receipt">
  <h2>Receipt</h2>
-
   <% @party.guests.times do |seat_number| %>
  
   <li><p>Seat number: <%= seat_number + 1 %></p></li>
@@ -57,7 +57,7 @@
   <% end %>
  <% end %>
 <ul>
-<p>Sub Total: <%= @currentTotal %> </p>
+<p>Sub Total: <%= currency ( @currentTotal) %> </p>
 
  <label for="tip" name="party[tip]">Suggested Tip:</label>
 15%<input id="tip" type="checkbox" name="party[tip]" value="<%= @currentTotal * 0.15.to_d %>">
@@ -72,7 +72,7 @@
     <input type="hidden" name="party[total]" value="<%= @currentTotal %>"> 
 	<input type="submit" value="Check out"> 
 </form>
-
+</section>
 
 <% else %>
 

@@ -2,8 +2,23 @@ body {
 	margin-top: 20px;
 	font-family: helvetica, sans-serif;
 	font-size: 100%;
-	/*text-align: center;*/
+	text-align: center;	
+	background-color: #F5F5F5;
 }
+
+#container{
+	margin: 0 auto;
+	width: 960px;
+
+}
+header{
+	margin-bottom: 50px;
+}
+
+/*h1 {
+	text-align: center;	
+}*/
+
 nav ul li  {
 	display: inline;
 }
@@ -21,7 +36,7 @@ li {
  a {
 	text-decoration: none;
 	border-radius: 3px;
-	padding: 10px;
+	padding: 15px 20px;
 }
 
 fieldset {
@@ -35,5 +50,35 @@ fieldset {
 	border: solid 1px black;
 	padding: 5px;
 	margin-right: 5px;
+	clear: both;
+	background-color: #EEE8AA;	
+};
+.party_box:active{
+	background-color: #008080;
+}
 
+.order-box {
+	text-align: center;	
+    display: inline-block;
+	border: solid 1px black;
+	padding: 5px;
+	margin-right: 5px;
+	clear: both;
+}
+.error {
+  color: red;
+  background-color: yellow;
+  border: 1px solid orange;
+  border-radius: 5px;
+  display: inline-block;
+  padding: 5px;
+  margin: 10px;
+}
+.order_show{
+	margin-top: 40px;
+}
+#receipt {
+	text-align: justify;
+	margin-left: 38%;
+    margin-right: 38%;
 }

@@ -9,7 +9,8 @@ require 'sass'
 class Restaurant < Sinatra::Base
   register Sinatra::ActiveRecordExtension
   enable :method_override
- set :default_currency_unit, '$'
+  enable :sessions
+ set :default_currency_unit, "£"
  set :default_currency_precision, 2
  set :default_currency_separator, ' '
 
@@ -44,9 +45,14 @@ class Restaurant < Sinatra::Base
   end
 
   post '/foods' do
-   food = params[:food]
-   item = Food.create(food)
-   redirect to "/foods/#{item.id}"
+    food = params[:food]
+    item = Food.create(food)
+    if item.valid?
+      redirect to "/foods/#{item.id}"
+    else
+      @error_message = item.errors.messages
+      erb :'foods/new'
+    end
   end
 
   get '/foods/:id/edit' do
@@ -132,6 +138,8 @@ class Restaurant < Sinatra::Base
   # end
 
   get '/orders' do
+    @orders = Order.all
+    @party = Party.all
     erb :'orders/index'
   end
 
@@ -174,9 +182,10 @@ class Restaurant < Sinatra::Base
   end
 
   patch '/parties/:party_id/orders' do |party_id|
-   # Pry.start(binding) 
+  
     @party = Party.find(party_id)
     params[:order].each do |seat_number, food_hash|
+
       order = Order.find_by(
         seat_number: seat_number, party_id: @party.id
       )

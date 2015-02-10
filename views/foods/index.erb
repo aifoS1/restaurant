@@ -1,9 +1,15 @@
 <h1>Current Menu</h1>
-<h3><a href="/foods/new">Add a new food to the menu!</a></h3>
+<h3>
+	<a href="/foods/new">Add a new food to the menu!</a>
+</h3>
 <ul>
 <% @menu.each do |food| %>
 
-   	<li><a href="/foods/<%=food.id%>"><%= food.name %></li>
+   	<li>
+<p><a href="/foods/<%=food.id%>">
+	<%= food.name %> <%= currency (food.price) %>
+</a></p>	
+   	</li>
 
  <% end %>
 </ul>

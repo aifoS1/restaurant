@@ -1,5 +1,23 @@
 
 <form action="/foods" method="post">
- <%= erb :"/foods/_form" %>
- <input type="submit" value="Create food!">
+	<% if @error_message %>
+<% @error_message.each do |error_name, error_message| %>
+       <li class='error'><%= error_name.capitalize %>: <%= error_message[0] %></li>
+    <% end %>
+  <% end %>
+ <h2>Add a New Menu Item</h2>
+
+<form action="/foods" method='POST'>
+
+<label for="food_name">Name:</label>
+<input id="food_name" type="text" name='food[name]'><br>
+
+ <label for="food_type">Cuisine Type:</label>
+ <input id="food_type" type="text" name='food[cuisine_type]' ><br>
+
+<label for="food_price">Price:</label>
+<input id="food_price"type="number" name='food[price]'value=0><br>
+	
+  <input type="submit" value="Create food!">
+ 
 </form>
