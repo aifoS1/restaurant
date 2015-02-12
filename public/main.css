@@ -45,7 +45,7 @@ fieldset {
 	display: inline;
 	padding: 15px;
 }
- .button a {	
+ .button a 	{	
 	display: inline-block;
    border-top: 1px solid #96d1f8;
    background: #374a57;

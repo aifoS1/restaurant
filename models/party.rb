@@ -4,7 +4,6 @@ class Party < ActiveRecord::Base
 has_many :orders, dependent: :destroy
 has_many :foods, through: :orders
 has_many :employees
-accepts_nested_attributes_for :foods
 
 
 def self.opentables
