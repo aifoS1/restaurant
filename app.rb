@@ -28,19 +28,6 @@ class Restaurant < Sinatra::Base
  end
 
 
-  get '/' do
-    erb :index
-  end
-  get '/signup' do
-    erb :'views/signup'
-  end
-   get '/welcome' do
-    erb :'views/welcome'
-  end
-
-  get '/login' do
-    erb :'views/login'
-  end
 
  
 

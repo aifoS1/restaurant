@@ -11,7 +11,7 @@ class FoodsController < ApplicationController
     erb :'foods/new'
   end
 
-post '/' do
+  post '/' do
     food = params[:food]
     item = Food.create(food)
     if item.valid?

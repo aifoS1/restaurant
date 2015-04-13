@@ -16,7 +16,6 @@ class SimpleAuthController < ApplicationController
     @employee = Employee.new( name: params[:employee][:name] )
 
     if params[:employee][:password] == params[:employee][:password_confirmation]
-      Pry.start(binding)
       @employee.password = params[:employee][:password]
 
       if @employee.save
@@ -90,7 +89,6 @@ class SimpleAuthController < ApplicationController
     # this will be called when a user has authenticated.  it will need
     # to create an authorization_token, and set it for both the session
     # and the user
-
      user.authorization_token = session[:authorization_token] = create_token
 
     user.save
