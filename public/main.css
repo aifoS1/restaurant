@@ -24,14 +24,12 @@ nav ul li  {
 li {
 	list-style-type: none;
 }
- nav a {
+nav a {
   border: solid grey;
   background-color: #778899;
   color: white;
-
  }
-
- a {
+a {
 	text-decoration: none;
 	border-radius: 3px;
 	padding: 15px 20px;
@@ -79,7 +77,7 @@ fieldset {
    }
 .party_box {
 	text-align: center;	
-    display: inline-block;
+  display: inline-block;
 	border: solid 1px black;
 	padding: 5px;
 	margin-right: 5px;
@@ -91,7 +89,7 @@ fieldset {
 }
 .order-box {
 	text-align: center;	
-    display: inline-block;
+  display: inline-block;
 	border: solid 1px black;
 	padding: 5px;
 	margin-right: 5px;
